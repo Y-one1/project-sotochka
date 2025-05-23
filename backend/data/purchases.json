@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "userId": 4,
+    "courseId": "course-3",
+    "status": "pending",
+    "createdAt": "2025-05-16T00:51:03.035Z"
+  },
+  {
+    "id": 2,
+    "userId": 4,
+    "courseId": "course-7",
+    "status": "pending",
+    "createdAt": "2025-05-16T00:51:10.051Z"
+  },
+  {
+    "id": 3,
+    "userId": 4,
+    "courseId": "course-8",
+    "status": "pending",
+    "createdAt": "2025-05-16T00:51:11.553Z"
+  }
+]

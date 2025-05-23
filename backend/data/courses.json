@@ -1,0 +1,123 @@
+[
+  {
+    "id": "course-1",
+    "title": "Основы успеха",
+    "subject": "math-pro",
+    "level": "beginner",
+    "type": "group",
+    "price": 18900,
+    "duration": "2 года",
+    "image": "../images/math_pro-1.png",
+    "description": "Постепенное освоение всех тем ЕГЭ с нуля."
+  },
+  {
+    "id": "course-2",
+    "title": "Продвинутый старт",
+    "subject": "math-pro",
+    "level": "intermediate",
+    "type": "group",
+    "price": 22900,
+    "duration": "1 год",
+    "image": "../images/math_pro-2.png",
+    "description": "Разбор сложных задач и нестандартных подходов."
+  },
+  {
+    "id": "course-3",
+    "title": "Олимпийская вершина",
+    "subject": "math-pro",
+    "level": "advanced",
+    "type": "mentorship",
+    "price": 34900,
+    "duration": "6 месяцев",
+    "image": "../images/math_pro-3.png",
+    "description": "Персональное менторство для максимального балла."
+  },
+  {
+    "id": "course-4",
+    "title": "Базовый интенсив",
+    "subject": "math-base",
+    "level": "beginner",
+    "type": "group",
+    "price": 12900,
+    "duration": "1 год",
+    "image": "../images/math_base-1.png",
+    "description": "Пошаговое освоение школьной программы."
+  },
+  {
+    "id": "course-5",
+    "title": "Практика для ЕГЭ",
+    "subject": "math-base",
+    "level": "intermediate",
+    "type": "group",
+    "price": 15900,
+    "duration": "1 год",
+    "image": "../images/math_base-2.png",
+    "description": "Решение типовых задач ЕГЭ."
+  },
+  {
+    "id": "course-6",
+    "title": "Основы физики",
+    "subject": "physics",
+    "level": "beginner",
+    "type": "group",
+    "price": 19900,
+    "duration": "2 года",
+    "image": "../images/physics-1.png",
+    "description": "Постепенное погружение в мир физических законов."
+  },
+  {
+    "id": "course-7",
+    "title": "Физика в задачах",
+    "subject": "physics",
+    "level": "intermediate",
+    "type": "group",
+    "price": 23900,
+    "duration": "1 год",
+    "image": "../images/physics-2.png",
+    "description": "Разбор ключевых разделов физики через задачи."
+  },
+  {
+    "id": "course-8",
+    "title": "Квантовый скачок",
+    "subject": "physics",
+    "level": "advanced",
+    "type": "mentorship",
+    "price": 35900,
+    "duration": "6 месяцев",
+    "image": "../images/physics-3.png",
+    "description": "Глубокое понимание физики и олимпиадные задачи."
+  },
+  {
+    "id": "course-9",
+    "title": "Программирование с нуля",
+    "subject": "informatics",
+    "level": "beginner",
+    "type": "group",
+    "price": 20900,
+    "duration": "2 года",
+    "image": "../images/informatics-1.jpg",
+    "description": "Основы алгоритмического мышления на Python."
+  },
+  {
+    "id": "course-10",
+    "title": "Алгоритмический практикум",
+    "subject": "informatics",
+    "level": "intermediate",
+    "type": "group",
+    "price": 24900,
+    "duration": "1 год",
+    "image": "../images/informatics-2.jpg",
+    "description": "Разбор задач ЕГЭ средней сложности."
+  },
+  {
+    "id": "course-11",
+    "title": "Профи ЕГЭ",
+    "subject": "informatics",
+    "level": "advanced",
+    "type": "mentorship",
+    "price": 36900,
+    "duration": "6 месяцев",
+    "image": "../images/informatics-3.jpg",
+    "description": "Подготовка к сложным задачам и олимпиадам."
+  }
+]

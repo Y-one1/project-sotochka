@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Программирование с нуля - Соточка</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <header>
+    <div class="container header-container">
+        <a href="../index.html" class="logo">
+        <img src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-honeycomb-icon-vector-illustration-png-image_6995631.png" 
+            alt="Логотип Соточка" 
+            class="honeycomb-logo"
+            width="40"
+            height="40">
+        <span class="logo-text">Соточка</span>
+        </a>
+        <ul class="nav-list">
+        <li><a href="../index.html#features">Преимущества</a></li>
+        <li><a href="../index.html#courses">Курсы</a></li>
+        <li><a href="../index.html#testimonials">Отзывы</a></li>
+        <li><a href="../index.html#contacts">Контакты</a></li>
+        </ul>
+        <div class="auth-nav" id="auth-nav">
+        <script>
+            (function() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (token && user && user.role === 'admin') {
+                document.write(`
+                <div id="user-profile" class="user-profile">
+                    <a href="../admin.html" class="btn btn-outline btn-sm">Администратор</a>
+                    <button class="btn btn-primary btn-sm" id="logout-btn-header">Выйти</button>
+                </div>
+                `);
+            } else if (token && user) {
+                document.write(`
+                <div id="user-profile" class="user-profile">
+                    <a href="../account.html" class="btn btn-outline btn-sm">Профиль</a>
+                    <button class="btn btn-primary btn-sm" id="logout-btn-header">Выйти</button>
+                </div>
+                `);
+            } else {
+                document.write(`
+                <div id="auth-buttons" class="auth-buttons">
+                    <button class="btn btn-outline btn-sm" id="login-btn">Вход</button>
+                    <button class="btn btn-primary btn-sm" id="register-btn">Регистрация</button>
+                </div>
+                <div id="user-profile" class="user-profile" style="display: none;"></div>
+                `);
+            }
+            })();
+        </script>
+        </div>
+        <button class="mobile-menu-btn">☰</button>
+    </div>
+    </header>
+
+
+    <!-- COURSE DETAILS SECTION -->
+    <section class="section course-details">
+        <div class="container">
+            <h1 class="section-title">Программирование с нуля</h1>
+            <div class="course-details-content">
+                <div class="course-image-special">
+                    <img src="../images/courses-9.png" alt="Программирование с нуля">
+                    <span class="course-badge">Начальный уровень</span>
+                </div>
+                <div class="course-info">
+                    <h2>О курсе</h2>
+                    <p>Курс "Программирование с нуля" предназначен для школьников, которые только начинают свой путь в мире информатики и программирования. Программа охватывает основы алгоритмизации, знакомство с языками программирования, такими как Python, и решение простых задач. Курс идеально подходит для учеников 9-10 классов, которые хотят заложить крепкий фундамент для дальнейшего изучения информатики.</p>
+                    <p>Обучение проходит в групповом формате, что позволяет ученикам обмениваться опытом и работать над проектами вместе. Курс длится 2 года, что обеспечивает постепенное и глубокое погружение в материал.</p>
+                    
+                    <h2>Что вы получите</h2>
+                    <ul>
+                        <li>Основы алгоритмизации и программирования.</li>
+                        <li>Практические навыки написания кода на языке Python.</li>
+                        <li>Групповые занятия с возможностью совместной работы над проектами.</li>
+                        <li>Доступ к учебным материалам и заданиям.</li>
+                        <li>Поддержку преподавателей и обратную связь.</li>
+                    </ul>
+                    
+                    <h2>Формат обучения</h2>
+                    <p>Курс проводится в групповом формате с онлайн-занятиями. Ученики получают доступ к платформе с учебными материалами, записями уроков и заданиями. Длительность курса составляет 2 года, что позволяет постепенно осваивать материал без спешки.</p>
+                    
+                    <h2>Преподаватели</h2>
+                    <p>Курс ведут опытные преподаватели, специализирующиеся на обучении начинающих программистов. Они помогут вам разобраться в основах и ответят на все вопросы.</p>
+                    
+                    <div class="course-meta">
+                        <div class="course-meta-item">
+                            <span>👥</span>
+                            <span>Групповые занятия</span>
+                        </div>
+                        <div class="course-meta-item">
+                            <span>⏳</span>
+                            <span>2 года</span>
+                        </div>
+                        <div class="course-meta-item">
+                            <span>💰</span>
+                            <span>20 900 ₽</span>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="initiatePurchase('course-9')">Приобрести</button>
+                        <button class="btn btn-outline btn-sm consultation-btn">Бесплатная консультация</button>
+                    </div>
+                </div>
+                
+                <!-- Reviews Block -->
+                <div class="course-reviews">
+                    <h3>Отзывы о курсе</h3>
+                    <div class="reviews-list" id="reviews-list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacts">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="../index.html" class="footer-logo">
+                        <img src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-honeycomb-icon-vector-illustration-png-image_6995631.png" 
+                             alt="Логотип Соточка" 
+                             width="30"
+                             height="30">
+                        <span class="footer-logo-text">Соточка</span>
+                    </a>
+                    <p class="footer-text">Современные курсы подготовки к ЕГЭ по математике, информатике и физике с индивидуальным подходом к каждому ученику.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="YouTube">📹</a>
+                        <a href="#" class="social-link" aria-label="Telegram">💬</a>
+                        <a href="#" class="social-link" aria-label="VK">📘</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Курсы</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#courses-math-pro">Математика (профиль)</a></li>
+                        <li><a href="../index.html#courses-math-base">Математика (база)</a></li>
+                        <li><a href="../index.html#courses-physics">Физика</a></li>
+                        <li><a href="../index.html#courses-informatics">Информатика</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Компания</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Преподаватели</a></li>
+                        <li><a href="#">Методика</a></li>
+                        <li><a href="../index.html#testimonials">Отзывы</a></li>
+                    </ul>
+                </div>
+                <div id="footer-col">
+                    <h3 class="footer-title">Контакты</h3>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">📞</span>
+                        <span class="footer-anim" data-text="+7 (123) 456-78-90">+7 (123) 456-78-90</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">✉️</span>
+                        <span class="footer-anim" data-text="info@soto4ka.ru">info@soto4ka.ru</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">📍</span>
+                        <span class="footer-anim" data-text="г. Иркутск, ул. Гагарина, 20">г. Иркутск, ул. Гагарина, 20</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Соточка. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <form id="login-form" class="auth-form">
+                <div class="form-header">
+                    <img src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-honeycomb-icon-vector-illustration-png-image_6995631.png" 
+                         alt="Логотип" class="modal-logo">
+                    <h3>Вход в аккаунт</h3>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="login-email" placeholder=" " required>
+                    <label for="login-email">Email</label>
+                    <div class="underline"></div>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder=" " required>
+                    <label for="login-password">Пароль</label>
+                    <div class="underline"></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                <div class="form-footer">
+                    <p>Нет аккаунта? <a href="#" id="show-register">Зарегистрироваться</a></p>
+                </div>
+            </form>
+            <form id="register-form" class="auth-form" style="display: none;">
+                <div class="form-header">
+                    <img src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-honeycomb-icon-vector-illustration-png-image_6995631.png" 
+                         alt="Логотип" class="modal-logo">
+                    <h3>Регистрация</h3>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="register-name" placeholder=" " required>
+                    <label for="register-name">Имя</label>
+                    <div class="underline"></div>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="register-email" placeholder=" " required>
+                    <label for="register-email">Email</label>
+                    <div class="underline"></div>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="register-password" placeholder=" " required>
+                    <label for="register-password">Пароль</label>
+                    <div class="underline"></div>
+                    <div class="password-hint">
+                        Пароль должен содержать минимум 8 символов, включая цифры и буквы
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                <div class="form-footer">
+                    <p>Уже есть аккаунт? <a href="#" id="show-login">Войти</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="purchase-confirm-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closePurchaseConfirmModal()">×</span>
+            <div class="auth-form">
+                <img src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-honeycomb-icon-vector-illustration-png-image_6995631.png" alt="Логотип" class="modal-logo">
+                <h3>Подтверждение покупки</h3>
+                <p>Вы собираетесь приобрести курс "Программирование с нуля" за 20 900 ₽. Подтвердить покупку?</p>
+                <div class="course-actions">
+                    <button class="btn btn-primary btn-block" onclick="confirmPurchase()">Подтвердить</button>
+                    <button class="btn btn-outline btn-block" onclick="closePurchaseConfirmModal()">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>
