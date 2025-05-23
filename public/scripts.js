@@ -2,7 +2,7 @@
    CONSTANTS AND UTILITIES
    ========================================================================== */
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://project-sotochka.onrender.com';
 const HEADER_HEIGHT = 80; // Fixed header height in pixels
 
 /**
