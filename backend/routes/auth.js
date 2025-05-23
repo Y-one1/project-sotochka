@@ -5,61 +5,73 @@ const path = require('path');
 
 const router = express.Router();
 const usersFile = path.join(__dirname, '../data/users.json');
-const SECRET_KEY = 'your-secret-key'; // В реальных проектах храните в .env
+const SECRET_KEY = process.env.SECRET_KEY;
+
+const fs = require('fs').promises; // Используем promises вместо sync
 
 // Чтение пользователей из JSON
-const readUsers = () => {
-  const data = fs.readFileSync(usersFile);
+const readUsers = async () => {
+  const data = await fs.readFile(usersFile, 'utf8');
   return JSON.parse(data);
 };
 
 // Запись пользователей в JSON
-const writeUsers = (users) => {
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+const writeUsers = async (users) => {
+  await fs.writeFile(usersFile, JSON.stringify(users, null, 2));
 };
 
 // Регистрация
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
-  const users = readUsers();
+  try {
+    const users = await readUsers();
 
-  // Проверка, существует ли пользователь
-  if (users.find(user => user.email === email)) {
-    return res.status(400).json({ message: 'Пользователь уже существует' });
+    // Проверка, существует ли пользователь
+    if (users.find(user => user.email === email)) {
+      return res.status(400).json({ message: 'Пользователь уже существует' });
+    }
+
+    // Создание нового пользователя
+    const newUser = {
+      id: users.length + 1,
+      name,
+      email,
+      password, // В реальном проекте хешируйте пароль
+      role: 'user' // По умолчанию обычный пользователь
+    };
+
+    users.push(newUser);
+    await writeUsers(users);
+
+    // Генерация JWT
+    const token = jwt.sign({ id: newUser.id, email, role: newUser.role }, SECRET_KEY, { expiresIn: '1h' });
+
+    res.status(201).json({ token, user: { id: newUser.id, name, email, role: newUser.role } });
+  } catch (error) {
+    console.error('Ошибка при регистрации:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
   }
-
-  // Создание нового пользователя
-  const newUser = {
-    id: users.length + 1,
-    name,
-    email,
-    password, // В реальном проекте хешируйте пароль
-    role: 'user' // По умолчанию обычный пользователь
-  };
-
-  users.push(newUser);
-  writeUsers(users);
-
-  // Генерация JWT
-  const token = jwt.sign({ id: newUser.id, email, role: newUser.role }, SECRET_KEY, { expiresIn: '1h' });
-
-  res.status(201).json({ token, user: { id: newUser.id, name, email, role: newUser.role } });
 });
 
 // Вход
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const users = readUsers();
+  try {
+    const users = await readUsers();
 
-  const user = users.find(u => u.email === email && u.password === password);
-  if (!user) {
-    return res.status(401).json({ message: 'Неверный email или пароль' });
+    const user = users.find(u => u.email === email && u.password === password);
+    if (!user) {
+      return res.status(401).json({ message: 'Неверный email или пароль' });
+    }
+
+    // Генерация JWT
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
+
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
+  } catch (error) {
+    console.error('Ошибка при входе:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
   }
-
-  // Генерация JWT
-  const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
-
-  res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
 });
 
 // Получение профиля (защищенный маршрут)
