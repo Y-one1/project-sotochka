@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Получение профиля (защищенный маршрут)
-router.get('/profile', (req, res) => {
+router.get('/profile', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
     return res.status(401).json({ message: 'Токен отсутствует' });
@@ -83,19 +83,20 @@ router.get('/profile', (req, res) => {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    const users = readUsers();
+    const users = await readUsers(); // Асинхронный вызов
     const user = users.find(u => u.id === decoded.id);
     if (!user) {
       return res.status(404).json({ message: 'Пользователь не найден' });
     }
     res.json(user); // Возвращаем полный объект пользователя, включая courses
   } catch (error) {
+    console.error('Ошибка в маршруте /profile:', error);
     res.status(401).json({ message: 'Неверный токен' });
   }
 });
 
 // Обновление профиля
-router.put('/profile', (req, res) => {
+router.put('/profile', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
     return res.status(401).json({ message: 'Токен отсутствует' });
@@ -103,7 +104,7 @@ router.put('/profile', (req, res) => {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    const users = readUsers();
+    const users = await readUsers(); // Асинхронный вызов
     const userIndex = users.findIndex(u => u.id === decoded.id);
 
     if (userIndex === -1) {
@@ -117,10 +118,11 @@ router.put('/profile', (req, res) => {
 
     users[userIndex].name = name || users[userIndex].name;
     users[userIndex].email = email || users[userIndex].email;
-    writeUsers(users);
+    await writeUsers(users); // Асинхронный вызов
 
     res.json({ id: users[userIndex].id, name: users[userIndex].name, email: users[userIndex].email, role: users[userIndex].role });
   } catch (error) {
+    console.error('Ошибка в маршруте PUT /profile:', error);
     res.status(401).json({ message: 'Неверный токен' });
   }
 });

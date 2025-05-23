@@ -215,7 +215,6 @@ function initializeAuth() {
         toggleModal(authModal, false);
         await updateHeader(); // Обновляем хедер после входа
         bindAuthButtons(); // Повторно привязываем обработчики
-        if (data.user.role === 'admin') console.log('Admin logged in');
         // Перенаправление на страницу личного кабинета после успешного входа
         if (window.location.pathname.includes('account.html')) {
           window.location.reload();
@@ -326,6 +325,11 @@ async function updateHeader() {
     const user = await response.json();
     console.log('Получены данные пользователя:', user);
     localStorage.setItem('user', JSON.stringify(user));
+
+    // Проверка роли администратора
+    if (user.role === 'admin') {
+      console.log('Admin logged in');
+    }
 
     // Проверяем, соответствует ли текущее состояние хедера данным пользователя
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
