@@ -1,3 +1,4 @@
+let isUpdatingHeader = false;
 /* ==========================================================================
    CONSTANTS AND UTILITIES
    ========================================================================== */
@@ -274,35 +275,39 @@ function initializeAuth() {
  * Updates header based on authentication status
  */
 async function updateHeader() {
-  console.log('updateHeader called on page:', window.location.pathname);
-  const token = localStorage.getItem('token');
-  const authButtons = document.getElementById('auth-buttons');
-  const userProfile = document.getElementById('user-profile');
-  const authNav = document.getElementById('auth-nav');
-
-  if (!authNav) {
-    console.warn('auth-nav отсутствует в DOM на странице:', window.location.pathname);
+  if (isUpdatingHeader) {
+    console.log('updateHeader пропущен: уже выполняется');
     return;
   }
-
-  // Если токена нет, показываем кнопки "Вход" и "Регистрация"
-  if (!token) {
-    if (authButtons && userProfile) {
-      authButtons.style.display = 'flex';
-      userProfile.style.display = 'none';
-    } else {
-      authNav.innerHTML = `
-        <div id="auth-buttons" class="auth-buttons">
-          <button class="btn btn-outline btn-sm" id="login-btn">Вход</button>
-          <button class="btn btn-primary btn-sm" id="register-btn">Регистрация</button>
-        </div>
-        <div id="user-profile" class="user-profile" style="display: none;"></div>
-      `;
-    }
-    return;
-  }
-
+  isUpdatingHeader = true;
   try {
+    console.log('updateHeader called on page:', window.location.pathname);
+    const token = localStorage.getItem('token');
+    const authButtons = document.getElementById('auth-buttons');
+    const userProfile = document.getElementById('user-profile');
+    const authNav = document.getElementById('auth-nav');
+
+    if (!authNav) {
+      console.warn('auth-nav отсутствует в DOM на странице:', window.location.pathname);
+      return;
+    }
+
+    if (!token) {
+      if (authButtons && userProfile) {
+        authButtons.style.display = 'flex';
+        userProfile.style.display = 'none';
+      } else {
+        authNav.innerHTML = `
+          <div id="auth-buttons" class="auth-buttons">
+            <button class="btn btn-outline btn-sm" id="login-btn">Вход</button>
+            <button class="btn btn-primary btn-sm" id="register-btn">Регистрация</button>
+          </div>
+          <div id="user-profile" class="user-profile" style="display: none;"></div>
+        `;
+      }
+      return;
+    }
+
     console.log('Отправка запроса к серверу для проверки токена');
     const response = await fetch(`${API_URL}/auth/profile`, {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -326,13 +331,10 @@ async function updateHeader() {
     console.log('Получены данные пользователя:', user);
     localStorage.setItem('user', JSON.stringify(user));
 
-    // Проверка роли администратора
     if (user.role === 'admin') {
       console.log('Admin logged in');
     }
 
-    // Проверяем, соответствует ли текущее состояние хедера данным пользователя
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     const isAdmin = user.role === 'admin';
     const expectedHTML = isAdmin
       ? `
@@ -348,11 +350,15 @@ async function updateHeader() {
         </div>
       `;
 
-    if (authNav.innerHTML !== expectedHTML) {
-      authNav.innerHTML = expectedHTML;
+    authNav.innerHTML = expectedHTML;
+
+    const authButtonsEl = document.getElementById('auth-buttons');
+    const userProfileEl = document.getElementById('user-profile');
+    if (authButtonsEl && userProfileEl) {
+      authButtonsEl.style.display = 'none';
+      userProfileEl.style.display = 'flex';
     }
 
-    // Добавляем обработчик для кнопки "Выйти"
     const logoutBtn = document.getElementById('logout-btn-header');
     if (logoutBtn) {
       logoutBtn.removeEventListener('click', logout);
@@ -370,6 +376,8 @@ async function updateHeader() {
       </div>
       <div id="user-profile" class="user-profile" style="display: none;"></div>
     `;
+  } finally {
+    isUpdatingHeader = false;
   }
 }
 
